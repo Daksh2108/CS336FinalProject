@@ -145,8 +145,10 @@
 	                }
 	                schedule_obj.push(sched_entry);
 	        }
+	        //localeCompare()
+
 	        schedule_obj.sort((a,b) => {
-	        	return a.departure > b.departure;
+	        	return a.departure.localeCompare(b.departure);
 	        });
 	        var new_rows = document.createElement('tbody');
 	        schedule_obj.forEach((e, i) => {
@@ -176,7 +178,7 @@
 	                schedule_obj.push(sched_entry);
 	        }
 	        schedule_obj.sort((a,b) => {
-	        	return a.arrival > b.arrival;
+	        	return a.arrival.localeCompare(b.arrival);
 	        });
 	        var new_rows = document.createElement('tbody');
 	        schedule_obj.forEach((e, i) => {
