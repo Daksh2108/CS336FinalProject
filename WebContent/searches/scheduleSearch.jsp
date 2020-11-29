@@ -19,11 +19,19 @@
 	   			Connection con = DriverManager.getConnection("jdbc:mysql://cs336.cl2bmz1pwrvy.us-east-2.rds.amazonaws.com:3306/proj","admin", "password");
 	   			Statement st = con.createStatement();
 	   		    ResultSet rs;
-	   		 	rs = st.executeQuery("select * from Train_Schedule_Data " +
-	   		    "inner join Departs_From on Train_Schedule_Data.TrainId = Departs_From.Tid and " + 
-	   		 	"Train_Schedule_Data.DepartureDateTime = Departs_From.DepartureDateTime and "+
-	   		    "Train_Schedule_Data.ArrivalDateTime = Departs_From.ArrivalDateTime "+
-	   		    "inner join Train_Station_Data on Departs_From.Sid = Train_Station_Data.StationId");
+	   		 	rs = st.executeQuery("SELECT *, (SELECT Name"+
+	   		 		" FROM Train_Station_Data as tsd"+
+	   		 	" WHERE tsd.StationId = aa.Sid) as arrival_station,"+
+	   		 	" (SELECT Name"+
+	   		 	" FROM Train_Station_Data as tsd"+
+	   		 	" WHERE tsd.StationId = df.Sid) as departure_station"+
+	   		 	" FROM Train_Schedule_Data as sd"+
+	   		 	" INNER JOIN Departs_From as df ON sd.TrainId = df.Tid"+ 
+	   		 	" AND sd.DepartureDateTime = df.DepartureDateTime"+ 
+	   		 	" AND sd.ArrivalDateTime = df.ArrivalDateTime"+  
+	   		 	" INNER JOIN Arrives_At as aa ON sd.TrainId = aa.Tid"+ 
+	   		 	" AND sd.DepartureDateTime = aa.DepartureDateTime"+ 
+	   		 	" AND sd.ArrivalDateTime = aa.ArrivalDateTime");
 	   	%>
 	   	
 		<table id="schedule_table" style="width:100%" border='1'>
@@ -35,7 +43,8 @@
 			      <th>Travel Time</th>
 			      <th id="departColumn" style="cursor:pointer">Departure Date</th>
 			      <th id="arriveColumn" style="cursor:pointer">Arrival Date</th>
-			      <th>Station Name</th>
+			      <th>Departure Station</th>
+			      <th>Arrival Station</th>
 			  </tr>
 		  </thead>
 		  <tbody>
@@ -80,9 +89,13 @@
 					out.print("</td>");
 					
 					out.print("<td>");
-					out.print(rs.getString("Name"));
+					out.print(rs.getString("departure_station"));
 					out.print("</td>");
 					
+					out.print("<td>");
+					out.print(rs.getString("arrival_station"));
+					out.print("</td>");
+
 					out.print("</tr>");
 				}
 	   		} catch(Exception e){
