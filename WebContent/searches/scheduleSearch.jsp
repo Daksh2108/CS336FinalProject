@@ -40,7 +40,7 @@
 		  </thead>
 		  <tbody>
 		  <!-- FOR TESTING PURPOSES ONLY -->
-		  	  <tr>
+		  	  <!-- <tr>
 			  	  <td><a href='../success.jsp'>Reserve This Trip</a></td>
 			      <td>2</td>
 			      <td>15</td> 
@@ -48,7 +48,7 @@
 			      <td>2020-11-27 07:45:00.0</td>
 			      <td>2020-11-27 08:45:00.0</td>
 			      <td>Huntington</td>
-			  </tr>
+			  </tr> -->
 		  <!-- FOR TESTING PURPOSES ONLY -->
 		<%
 				while (rs.next()) {
@@ -116,7 +116,7 @@
 	                schedule_obj.push(sched_entry);
 	        }
 	        schedule_obj.sort((a,b) => {
-	        	return a.fare > b.fare;
+	        	return a.fare - b.fare;
 	        });
 	        var new_rows = document.createElement('tbody');
 	        schedule_obj.forEach((e, i) => {
