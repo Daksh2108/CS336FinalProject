@@ -3,6 +3,13 @@
     String userid = request.getParameter("username").trim();   
     String pwd = request.getParameter("password").trim();
     
+    if(userid.equals("admin") && pwd.equals("admin") ){
+    	//open a page 
+    	
+    	 response.sendRedirect("admin/adminpage.jsp");
+    	return;
+    	
+    }
     
     if(userid.equals("") ){
     	out.println("Make sure username is not blank  <a href='login.jsp'>try again</a>");

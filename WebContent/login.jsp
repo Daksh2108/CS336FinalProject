@@ -3,15 +3,17 @@
 <!DOCTYPE html>
 <html>
    <head>
-      <title>Login Form</title>
+      <title>Login Page</title>
    </head>
    <body>
    <h1>LOGIN</h1>
      <form action="displayLoginDetails.jsp" method="POST">
        Username: <input type="text" name="username"/> <br/>
        Password:<input type="password" name="password"/> <br/>
-       <input type="submit" value="Submit"/>
+       <input type="submit" value="Login"/>
      </form> <br/>
-     <a href="register.jsp">Don't have an account?</a>
+     <a href="register.jsp">Don't have an account?</a> <br/>
+     
+     <a href="customerRep/customerRepLogin.jsp">Employees Login Here</a> <br/>
    </body>
 </html>
