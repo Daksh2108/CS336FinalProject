@@ -74,16 +74,5 @@ boolean checkDuplicateUsers(Connection con, String username, String userid) thro
    
    rs.close();
    con.close();
-//    int result=0;
-//     //result=Integer.parseInt(rs.getObject(1).toString());
-//     //Integer.parseInt(rs.getObject(1).toString());
-//      st.executeUpdate("insert into users(username,password) values(username='" + userid + "' and password='" + pwd + "'");
-//     if (rs.next()) {
-//         session.setAttribute("user", userid); // the username will be stored in the session
-//         out.println("welcome " + userid);
-//         out.println("<a href='logout.jsp'>Log out</a>");
-//         response.sendRedirect("success.jsp");
-//     } else {
-//         out.println("Invalid password <a href='login.jsp'>try again</a>");
-//     }
+
 %>
