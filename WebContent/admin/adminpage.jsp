@@ -29,7 +29,7 @@
 	<input type="submit" value="Reservations"/>
 </form> <br/>
   
-<form action="revenue.jsp" method="POST">
+<form action="chooseRevenue.jsp" method="POST">
 	<input type="submit" value="Revenue"/>
 </form> <br/>
   
