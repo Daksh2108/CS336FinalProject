@@ -11,7 +11,10 @@
 <a href='addRep.jsp'>Add Customer Representative</a> <br/> <br/>
 <a href='editRep.jsp'>Edit Customer Representative</a> <br/> <br/>
 <a href='deleteRep.jsp'>Delete Customer Representative</a> <br/> <br/>
-<a href='salesReportjsp'>Sales Report</a> <br/> <br/>
+<form action="salesDetails.jsp" method="POST">
+<a href='salesReport.jsp'>Sales Report</a> <br/> <br/>
+ <input type="submit" value="Find Sales Report"/>
+  </form> <br/>
 <a href='reservations.jsp'>Reservations</a> <br/> <br/>
 <a href='revenue.jsp'>Revenue</a> <br/> <br/>
 <p>Best Customer:</p>

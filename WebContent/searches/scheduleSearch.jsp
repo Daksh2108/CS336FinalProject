@@ -131,7 +131,9 @@
 	   	</table>
 	</body>
 	
+	
 	<script>
+	    
 		const fare_click = document.getElementById('fareColumn');
 		const depart_click = document.getElementById('departColumn');
 		const arrive_click = document.getElementById('arriveColumn');
@@ -152,7 +154,7 @@
                var sched_entry = {};
                for (var j = 0; j < cols.length; j++) {
                	if(j === 0){
-               		sched_entry[col_names[j]] = "<a href='../success.jsp'>Reserve This Trip</a>";
+               		sched_entry[col_names[j]] = "<a href='../success.jsp'>Reserve This Trip</a>";    		
                	} else{
                		sched_entry[col_names[j]] = cols[j].innerText;
                	}
