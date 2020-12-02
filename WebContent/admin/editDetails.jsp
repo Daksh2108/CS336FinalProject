@@ -154,7 +154,7 @@ boolean checkDuplicateSSN(Connection con, String oldSSN, String newSSN) throws S
     session.setAttribute("userid",userid);
     			
     out.println("CUSTOMER REP ACCOUNT SUCCESSFULLY CREATED");
-    response.sendRedirect("adminpage.jsp");
+    response.sendRedirect("successEdit.jsp");
    
    
    

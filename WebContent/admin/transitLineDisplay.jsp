@@ -6,15 +6,10 @@
 <!DOCTYPE html>
 <html>
    	<head>
-      	<title>Delete Page </title>
-      	<h1>Delete Customer Representative</h1>
-      <a href="adminpage.jsp">Go Back</a></br>
-      <form action="deleteRepDetails.jsp" method="POST">
-       Enter SSN of representative to be deleted: <input type="text" name="SSN"/> <br/>
-       <input type="submit" value="Delete Representative"/> <br/>
-     </form> <br/>
     </head>
    	<body>
+   		<h1>Reservations By Transit Lines: </h1>
+		<a href="adminpage.jsp">Home</a> </br> </br>
       	<!-- Retrieve train schedules from data base -->
 	   	<%
 	   		try{
@@ -23,18 +18,18 @@
 	   			Connection con = DriverManager.getConnection("jdbc:mysql://cs336.cl2bmz1pwrvy.us-east-2.rds.amazonaws.com:3306/proj","admin", "password");
 	   			Statement st = con.createStatement();
 	   		    ResultSet rs;
-	   		 	rs = st.executeQuery("SELECT * from Employee_Data");
+	   		 	rs = st.executeQuery("select t.TransitLine,r.reservation_number,r.Date,r.total_fare,r.username ,r.TrainId from Reservation r , Train_Schedule_Data as t where t.TrainId=r.TrainId");
 	   	%>
 	   	
-		<table id="schedule_table" style="width:100%" border='1'>
+		<table id="transitLineTable" style="width:100%" border='1'>
 		<thead>
 			  <tr>
-			  	  <th>SSN</th>
-			      <th>UserName</th>
-			      <th>Password</th>
-			      <th>First Name</th>
-			      <th>Last Name</th>
-			      <th>Train Id</th>
+			  	  <th>TransitLine</th>
+			      <th>Reservation Number</th>
+			      <th>Date</th>
+			      <th>Total Fare</th>
+			      <th>Username</th>
+			      <th>TrainId</th>
 			  </tr>
 		  </thead>
 		  <tbody>
@@ -44,31 +39,32 @@
 					out.print("<tr>");
 					
 					out.print("<td>");
-					out.print(rs.getString("SSN"));
+					out.print(rs.getString("t.TransitLine"));
 					out.print("</td>");
 					
 					
 					out.print("<td>");
-					out.print(rs.getString("username"));
+					out.print(rs.getString("r.reservation_number"));
 					out.print("</td>");
 					
 					out.print("<td>");
-					out.print(rs.getString("password"));
+					out.print(rs.getString("r.Date"));
 					out.print("</td>");
 					
 					out.print("<td>");
-					out.print(rs.getString("first_name"));
+					out.print(rs.getString("r.total_fare"));
 					out.print("</td>");
 					
 					out.print("<td>");
-					out.print(rs.getString("last_name"));
+					out.print(rs.getString("r.username"));
 					out.print("</td>");
 					
 					out.print("<td>");
-					out.print(rs.getString("TrainID"));
+					out.print(rs.getString("r.TrainId"));
 					out.print("</td>");
 
 					out.print("</tr>");
+					
 				}
 	   		} catch(Exception e){
 	   			e.printStackTrace();
@@ -78,5 +74,6 @@
 	  
   	</script> 
   		<body>
+  		
   	</body>
 </html>

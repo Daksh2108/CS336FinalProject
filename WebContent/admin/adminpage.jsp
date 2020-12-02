@@ -8,15 +8,31 @@
 </head>
 <body>
 <h1>Welcome Admin</h1>
-<a href='addRep.jsp'>Add Customer Representative</a> <br/> <br/>
-<a href='editRep.jsp'>Edit Customer Representative</a> <br/> <br/>
-<a href='deleteRep.jsp'>Delete Customer Representative</a> <br/> <br/>
+
+<form action="addRep.jsp" method="POST">
+	<input type="submit" value="Add Customer Representative"/>
+</form> </br>
+
+<form action="editRep.jsp" method="POST">
+	<input type="submit" value="Edit Customer Representative"/>
+</form> </br>
+
+<form action="deleteRep.jsp" method="POST">
+	<input type="submit" value="Delete Customer Representative"/>
+</form> </br>
+
 <form action="salesDetails.jsp" method="POST">
-<a href='salesReport.jsp'>Sales Report</a> <br/> <br/>
- <input type="submit" value="Find Sales Report"/>
-  </form> <br/>
-<a href='reservations.jsp'>Reservations</a> <br/> <br/>
-<a href='revenue.jsp'>Revenue</a> <br/> <br/>
+	<input type="submit" value="Find Sales Report"/>
+</form> <br/>
+  
+<form action="chooseReservation.jsp" method="POST">
+	<input type="submit" value="Reservations"/>
+</form> <br/>
+  
+<form action="revenue.jsp" method="POST">
+	<input type="submit" value="Revenue"/>
+</form> <br/>
+  
 <p>Best Customer:</p>
  <!-- Find a way to display best customer here -->
  <p>5 Most Active Transit Lines:</p>
