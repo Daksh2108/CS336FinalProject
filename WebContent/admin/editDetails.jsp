@@ -1,40 +1,62 @@
 <%@ page import ="java.sql.*" %>
 <%! 
 // Validate if the value of the specified field (e.g. email, username) in customer table is unique.
-boolean checkDuplicateUsers(Connection con, String userid) throws SQLException {
+boolean checkOldSSN(Connection con, String oldSSN) throws SQLException {
 	ResultSet result;
 	
 	PreparedStatement stmt = con.prepareStatement(
-			"SELECT * FROM Employee_Data WHERE username<> " + userid + "and username= ?");
-	
-	//SELECT * FROM Employee_Data WHERE ssn<>'111-11-1111' and + ssn + "=?"
+			"SELECT SSN FROM Employee_Data WHERE SSN = ?");
 
-	stmt.setString(1, userid);
+
+	stmt.setString(1, oldSSN);
 	result= stmt.executeQuery();
 	//resultset returns boolean type
-	boolean indicate = !result.next();
-	
+	if(result.next()){
+		return true;
+	}
 	result.close();
 	stmt.close();
-	
-	return indicate;
+	return false;
 }
 
-boolean checkDuplicateSSN(Connection con, String userid,String oldSSN) throws SQLException {
+
+boolean checkDuplicateUsers(Connection con, String userid, String oldSSN) throws SQLException {
 	ResultSet result;
 	
 	PreparedStatement stmt = con.prepareStatement(
-			"SELECT * FROM Employee_Data WHERE SSN<>'" + oldSSN + "and SSN =?");
-	      
-	stmt.setString(1, userid);
+			"SELECT username FROM Employee_Data WHERE SSN<> ?");
+
+
+	stmt.setString(1, oldSSN);
 	result= stmt.executeQuery();
 	//resultset returns boolean type
-	boolean indicate = !result.next();
-	
+	while(result.next()){
+		if(result.getString(1).equals(userid)){
+			return false;
+		}
+	}
 	result.close();
 	stmt.close();
+	return true;
+}
+
+boolean checkDuplicateSSN(Connection con, String oldSSN, String newSSN) throws SQLException {
+	ResultSet result;
 	
-	return indicate;
+	PreparedStatement stmt = con.prepareStatement(
+			"SELECT SSN FROM Employee_Data WHERE SSN<> ?");
+	      
+	stmt.setString(1, oldSSN);
+	result= stmt.executeQuery();
+	while(result.next()){
+		if(result.getString(1).equals(newSSN)){
+			return false;
+		}
+	}
+	result.close();
+	stmt.close();
+	return true;
+
 }
 %>
 <%
@@ -87,8 +109,16 @@ boolean checkDuplicateSSN(Connection con, String userid,String oldSSN) throws SQ
     Statement st = con.createStatement();
     
     ResultSet rs3=st.executeQuery("select * from Employee_Data where username='" + userid + "'"); 
+       			
+    //check if old SSN exists
+    if(checkOldSSN(con, oldSSN) == false){
+    	error = "SSN " + oldSSN + " doesn't exist.";
+		out.println("Old SSN does not exist <a href='editRep.jsp'>try again</a>");
+    
+		return;
+    }
     			
-    if (checkDuplicateUsers(con, userid)==false) {
+    if (checkDuplicateUsers(con, userid, oldSSN)==false) {
 		error = "Username " + userid + " is already taken.";
 		out.println("Username already exists <a href='editRep.jsp'>try again</a>");
     
@@ -98,7 +128,7 @@ boolean checkDuplicateSSN(Connection con, String userid,String oldSSN) throws SQ
     
     
     
-    if (checkDuplicateSSN(con, newSSN, userid)==false) {
+    if (checkDuplicateSSN(con, oldSSN, newSSN)==false) {
 		error = "SSN " + newSSN + " is already taken.";
 		out.println("SSN already exists <a href='editRep.jsp'>try again</a>");
     
@@ -110,13 +140,13 @@ boolean checkDuplicateSSN(Connection con, String userid,String oldSSN) throws SQ
     
     
     PreparedStatement rs = con.prepareStatement(
-					"INSERT INTO Employee_Data(SSN, username,password,first_name,last_name,TrainId) " + "VALUES(?, ?, ?, ?, ?, ?)");
-   
+					"INSERT INTO Employee_Data(SSN, username,password,first_name,last_name,TrainId) VALUES(?, ?, ?, ?, ?, ?)");
+   //insert into Employee_Data(SSN,username,password,first_name,last_name,TrainId)values('111-11-1111', 'employee1', 'employee1', 'Jack', 'Smith', '1');
    
    
 	rs.setString(1, newSSN);
-    rs.setString(2, pwd);
-    rs.setString(3, userid);
+    rs.setString(2, userid);
+    rs.setString(3, pwd);
     rs.setString(4, firstname);
     rs.setString(5, lastname);
     rs.setString(6, trainId);
@@ -124,7 +154,7 @@ boolean checkDuplicateSSN(Connection con, String userid,String oldSSN) throws SQ
     session.setAttribute("userid",userid);
     			
     out.println("CUSTOMER REP ACCOUNT SUCCESSFULLY CREATED");
-    response.sendRedirect("adminPage.jsp");
+    response.sendRedirect("adminpage.jsp");
    
    
    
