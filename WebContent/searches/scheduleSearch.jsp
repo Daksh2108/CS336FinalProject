@@ -54,18 +54,8 @@
 			  </tr>
 		  </thead>
 		  <tbody>
-		  <!-- FOR TESTING PURPOSES ONLY -->
-		  	  <!-- <tr>
-			  	  <td><a href='../success.jsp'>Reserve This Trip</a></td>
-			      <td>2</td>
-			      <td>15</td> 
-			      <td>01:00:00</td>
-			      <td>2020-11-27 07:45:00.0</td>
-			      <td>2020-11-27 08:45:00.0</td>
-			      <td>Huntington</td>
-			  </tr> -->
-		  <!-- FOR TESTING PURPOSES ONLY -->
 		<%
+				int count = 0;
 				while (rs.next()) {
 					
 					String arrivalStation = rs.getString("arrival_station");
@@ -75,6 +65,8 @@
 					int deptStop = Integer.parseInt(rs.getString("deptStop"));
 					
 					if(arrStop <= deptStop){
+						continue;
+					} else if(arrivalStation.equals(departureStation)){
 						continue;
 					}
 					
@@ -86,7 +78,7 @@
 					out.print("<tr>");
 					
 					out.print("<td>");
-					out.print("<a href='../success.jsp'>Reserve This Trip</a>");
+					out.print("<button id="+count+" onclick=\"makeReserve(this.id)\">Reserve This Trip</button>");
 					out.print("</td>");
 					
 					out.print("<td>");
@@ -122,6 +114,7 @@
 					out.print("</td>");
 
 					out.print("</tr>");
+					count++;
 				}
 	   		} catch(Exception e){
 	   			e.printStackTrace();
@@ -144,8 +137,8 @@
 		const search_button = document.getElementById('search');
 		
 		const col_names = ["reserve", "train_id", "fare", "travel_time", "departure", "departure_station", "arrival", "arrival_station", "transit_line"];
-		var schedule_obj = [];
-		var filtered_obj = [];
+		let schedule_obj = [];
+		let filtered_obj = [];
 		const curr_table = document.getElementById('schedule_table');
 		
 		const table_rows = curr_table.rows;
@@ -154,7 +147,7 @@
                var sched_entry = {};
                for (var j = 0; j < cols.length; j++) {
                	if(j === 0){
-               		sched_entry[col_names[j]] = "<a href='../success.jsp'>Reserve This Trip</a>";    		
+               		sched_entry[col_names[j]] = cols[j].innerHTML;    		
                	} else{
                		sched_entry[col_names[j]] = cols[j].innerText;
                	}
@@ -176,26 +169,41 @@
 	        curr_table.replaceChild(new_rows, curr_table.childNodes[3]);
 		}
 		
+		function makeReserve(e){
+			sessionStorage.setItem("train_id", schedule_obj[e]["train_id"]);
+			sessionStorage.setItem("fare", schedule_obj[e]["fare"]);
+			sessionStorage.setItem("travel_time", schedule_obj[e]["travel_time"]);
+			sessionStorage.setItem("departure", schedule_obj[e]["departure"]);
+			sessionStorage.setItem("departure_station", schedule_obj[e]["departure_station"]);
+			sessionStorage.setItem("arrival", schedule_obj[e]["arrival"]);
+			sessionStorage.setItem("arrival_station", schedule_obj[e]["arrival_station"]);
+			sessionStorage.setItem("transit_line", schedule_obj[e]["transit_line"]);
+			window.location.href = "../reservation.jsp";
+		}
+		
 		fare_click.addEventListener('click', (e) => {
-	        schedule_obj.sort((a,b) => {
+			filtered_obj = schedule_obj.slice();
+			filtered_obj.sort((a,b) => {
 	        	return a.fare - b.fare;
 	        });
-	        rePopTable(schedule_obj);
+	        rePopTable(filtered_obj);
 		});
 		depart_click.addEventListener('click', (e) => {
-	        schedule_obj.sort((a,b) => {
+			filtered_obj = schedule_obj.slice();
+			filtered_obj.sort((a,b) => {
 	        	return a.departure.localeCompare(b.departure);
 	        });
-	        rePopTable(schedule_obj);
+	        rePopTable(filtered_obj);
 		});
 		arrive_click.addEventListener('click', (e) => {
-	        schedule_obj.sort((a,b) => {
+			filtered_obj = schedule_obj.slice();
+			filtered_obj.sort((a,b) => {
 	        	return a.arrival.localeCompare(b.arrival);
 	        });
-	        rePopTable(schedule_obj);
+	        rePopTable(filtered_obj);
 		});
 		search_button.addEventListener('click', (e) => {
-			filtered_obj = schedule_obj;
+			filtered_obj = schedule_obj.slice();
 			if(orgsearch.value !== ''){
 				filtered_obj = filtered_obj.filter(route => route.departure_station.indexOf(orgsearch.value) > -1);
 			}
