@@ -33,7 +33,11 @@
 	<input type="submit" value="Revenue"/>
 </form> <br/>
   
-<p>Best Customer:</p>
+
+<form action="bestCustomer.jsp" method="POST">
+	<input type="submit" value="Find Best Customer"/>
+</form> <br/>
+  
  <!-- Find a way to display best customer here -->
  <p>5 Most Active Transit Lines:</p>
  <!-- Find a way to display Most Active Transit Lines here -->

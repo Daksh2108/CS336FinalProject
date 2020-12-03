@@ -14,6 +14,12 @@
      </form> <br/>
      <a href="register.jsp">Don't have an account?</a> <br/>
      
-     <a href="customerRep/customerRepLogin.jsp">Employees Login Here</a> <br/>
+     <a href="customerRep/customerRepLogin.jsp">Employees Login Here</a> <br/><br/>
+     
+     
+       <form action="displayLoginDetails.jsp" method="POST">
+       <input type="submit" value="Check FAQ"/>
+     </form> <br/>
+     
    </body>
 </html>
