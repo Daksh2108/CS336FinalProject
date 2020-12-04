@@ -38,9 +38,10 @@
 	<input type="submit" value="Find Best Customer"/>
 </form> <br/>
   
- <!-- Find a way to display best customer here -->
- <p>5 Most Active Transit Lines:</p>
- <!-- Find a way to display Most Active Transit Lines here -->
+<form action="bestTransitLines.jsp" method="POST">
+	<input type="submit" value="Most Active Transit Lines"/>
+</form> <br/>
+ 
 <a href="../login.jsp">Sign Out</a>
 
 
