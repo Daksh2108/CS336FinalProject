@@ -13,6 +13,11 @@
    	    <form action="searchKeyword.jsp" method="POST">
         Search By Keyword: <input type="text" name="keyword"/> <br/>
        <input type="submit" value="Search"/>
+     </form> <br/><br/>
+       
+   	    <form action="successQuestions.jsp" method="POST">
+        Ask Question: <input type="text" name="customerQuestion"/> <br/>
+       <input type="submit" value="Ask Question"/>
      </form> <br/>
    		
 		

@@ -16,6 +16,12 @@
 		
       	<!-- Retrieve train schedules from data base -->
 	   	<%
+	   	
+	   	    if(request.getParameter("keyword").trim().equals("")){
+	   	    session.setAttribute("customerQuestion","keywordFailed");
+	   	 	response.sendRedirect("successQueAdded.jsp");
+	   	 	return;
+	   	    }
 	   		try{
 	   			
 	   			Class.forName("com.mysql.jdbc.Driver");
