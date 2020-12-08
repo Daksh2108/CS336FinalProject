@@ -16,6 +16,9 @@
 	<input type="submit" value="Delete Reservation"/>
 </form> </br>
  
+ <form action="answerQuestion.jsp" method="POST">
+	<input type="submit" value="Answer Customer Question"/>
+</form> </br>
 <a href="../login.jsp">Sign Out</a>
 
 
