@@ -24,6 +24,10 @@
 	<input type="submit" value="List of Train Schedules"/>
 </form> </br>
 
+ <form action="customerList.jsp" method="POST">
+	<input type="submit" value="List of Customers with Reservations"/>
+</form> </br>
+
 <a href="../login.jsp">Sign Out</a>
 
 
