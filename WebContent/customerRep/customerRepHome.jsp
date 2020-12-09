@@ -19,6 +19,11 @@
  <form action="answerQuestion.jsp" method="POST">
 	<input type="submit" value="Answer Customer Question"/>
 </form> </br>
+
+ <form action="trainList.jsp" method="POST">
+	<input type="submit" value="List of Train Schedules"/>
+</form> </br>
+
 <a href="../login.jsp">Sign Out</a>
 
 
