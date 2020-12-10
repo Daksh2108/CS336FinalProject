@@ -5,22 +5,46 @@
 <!DOCTYPE html>
 <html>
    	<head>
-      	<title>Train Schedules</title>
+      	<title>Edit Schedules</title>
     </head>
    	<body>
-	   	<h1>Find Train Schedules</h1>
-	   	<a href='../success.jsp'>Home</a> <br/> <br/>
-	   	
-	   	<h3>Search</h3> (Leave empty if you don't want to filter a category)<br/>
-	   	Departure Station: <input type="text" placeholder="MetroPark" id="or_search"/> <br/>
-	   	Arrival Station: <input type="text" placeholder="Rahway" id="dest_search"/> <br/>
-	   	Date & Time: <input type="text" placeholder="2020-11-27 08:45:00.0" id="datetime_search"/> <br/>
-	   	<button id="search">Search</button> <br/><br/>
-	   	
-	<form action="deleteScheduleDetails.jsp" method="POST">
-	Train Id:<input type="text" name="train_Id"/> <br/>
-	<input type="submit" value="Enter Train Id to Delete"/> <br/> 
-	 </form> <br/>
+	   	<h1>Edit Train Schedules</h1>
+	   	<a href='customerRepHome.jsp'>Home</a> <br/> <br/>
+	   
+	 <h3>Search</h3> (Leave empty if you don't want to filter a category)<br/>
+	 Departure Station: <input type="text" placeholder="MetroPark" id="or_search"/> <br/>
+	 Arrival Station: <input type="text" placeholder="Rahway" id="dest_search"/> <br/>
+	 Date & Time: <input type="text" placeholder="2020-11-27 08:45:00.0" id="datetime_search"/> <br/>
+	 <button id="search">Search</button> <br/><br/>
+	 
+	<h3>Edit Departure Date Time</h3><br/>
+	<form action="editDepartureTime.jsp" method="POST">
+    Train ID: <input type="text" name="train_id"/> <br/>
+    Old Departure Date:<input type="text" name="oldDeparture_date"/> <br/>
+    Departure Date:<input type="text" name="departure_date"/> <br/>
+    Station Id:<input type="text" name="station_id"/> <br/>
+	Stop No:<input type="text" name="stop_no"/> <br/>
+	<input type="submit" value="submit"/> <br/> 
+	</form> <br/>
+	
+	<h3>Edit Arrival Date Time</h3><br/>
+	<form action="editArrivalTime.jsp" method="POST">
+	Train ID: <input type="text" name="train_id"/> <br/>
+	Old Arrival Date:<input type="text" name="oldArrival_date"/> <br/>
+    Arrival Date:<input type="text" name="arrival_date"/> <br/>
+    Station Id:<input type="text" name="station_id"/> <br/>
+	Stop No:<input type="text" name="stop_no"/> <br/>
+	<input type="submit" value="submit"/> <br/> 
+	</form> <br/>
+	
+	<h3>Edit Transit Line Name</h3><br/>
+	<form action="editTransitLine.jsp" method="POST">
+	Train Id:<input type="text" name="train_id"/> <br/>
+	Transit Line:<input type="text" name="transit_line"/> <br/>
+	<input type="submit" value="submit"/> <br/> 
+	</form> <br/>
+	
+	
 	<a href="customerRepHome.jsp">Go Back</a>
 	   		
 	   	<!-- Retrieve train schedules from data base -->

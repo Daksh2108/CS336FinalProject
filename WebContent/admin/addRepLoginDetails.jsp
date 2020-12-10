@@ -44,7 +44,6 @@ boolean checkDuplicateSSN(Connection con, String ssn, String userid) throws SQLE
     String confirmPwd = request.getParameter("confirm_password").trim();
     String firstname = request.getParameter("first_name").trim();
     String lastname = request.getParameter("last_name").trim();
-    String trainId = request.getParameter("train_Id").trim();
     
     //checking for null values if entered by user 
     
@@ -76,10 +75,7 @@ boolean checkDuplicateSSN(Connection con, String ssn, String userid) throws SQLE
        	out.println("Please fill lastname in  <a href='addRep.jsp'>try again</a>");
            return;
        }
-      if(!trainId.equals("1") && !trainId.equals("2") && !trainId.equals("3") && !trainId.equals("4") && !trainId.equals("5")){
-       	out.println("Please enter a valid trainId 1 - 5  <a href='addRep.jsp'>try again</a>");
-           return;
-       }
+      
     Class.forName("com.mysql.jdbc.Driver");
     Connection con = DriverManager.getConnection("jdbc:mysql://cs336.cl2bmz1pwrvy.us-east-2.rds.amazonaws.com:3306/proj?useSSL=false","admin", "password");
     Statement st = con.createStatement();
@@ -99,7 +95,7 @@ boolean checkDuplicateSSN(Connection con, String ssn, String userid) throws SQLE
 		return;
     }
     PreparedStatement rs = con.prepareStatement(
-					"INSERT INTO Employee_Data(SSN, username,password,first_name,last_name,TrainId) " + "VALUES(?, ?, ?, ?, ?, ?)");
+					"INSERT INTO Employee_Data(SSN, username,password,first_name,last_name) " + "VALUES(?, ?, ?, ?, ?)");
    
    
    
@@ -108,7 +104,7 @@ boolean checkDuplicateSSN(Connection con, String ssn, String userid) throws SQLE
     rs.setString(3, userid);
     rs.setString(4, firstname);
     rs.setString(5, lastname);
-    rs.setString(6, trainId);
+    
     rs.executeUpdate();
     session.setAttribute("userid",userid);
     			

@@ -13,9 +13,13 @@
 <h1>Welcome <%=session.getAttribute("fullname")%> <br/></h1>
 
 <form action="deleteSchedule.jsp" method="POST">
-	<input type="submit" value="Delete Reservation"/>
+	<input type="submit" value="Delete Train Schedule"/>
+	
 </form> </br>
- 
+ <form action="editSchedule.jsp" method="POST">
+	<input type="submit" value="Edit Train Schedule"/>
+</form> </br>
+
  <form action="answerQuestion.jsp" method="POST">
 	<input type="submit" value="Answer Customer Question"/>
 </form> </br>

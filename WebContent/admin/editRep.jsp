@@ -19,7 +19,6 @@
 	Confirm Password:<input type="password" name="confirm_password"/> <br/>
 	First Name:<input type="text" name="first_name"/> <br/>
 	Last Name:<input type="text" name="last_name"/> <br/>
-	Train Id:<input type="text" name="train_id"/> <br/>
 	<input type="submit" value="Edit"/> <br/> 
 	</form> <br/>
 </body>
@@ -41,7 +40,7 @@
 			      <th>Password</th>
 			      <th>First Name</th>
 			      <th>Last Name</th>
-			      <th>Train Id</th>
+			      
 			  </tr>
 		  </thead>
 		  <tbody>
@@ -71,9 +70,6 @@
 					out.print(rs.getString("last_name"));
 					out.print("</td>");
 					
-					out.print("<td>");
-					out.print(rs.getString("TrainID"));
-					out.print("</td>");
 
 					out.print("</tr>");
 				}

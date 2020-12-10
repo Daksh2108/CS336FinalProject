@@ -15,7 +15,6 @@
 	Confirm Password:<input type="password" name="confirm_password"/> <br/>
 	First Name:<input type="text" name="first_name"/> <br/>
 	Last Name:<input type="text" name="last_name"/> <br/>
-	Train Id:<input type="text" name="train_Id"/> <br/>
 	<input type="submit" value="Add"/> <br/> 
 	 </form> <br/>
 	<a href="adminpage.jsp">Go Back</a>

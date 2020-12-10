@@ -34,7 +34,7 @@
 			      <th>Password</th>
 			      <th>First Name</th>
 			      <th>Last Name</th>
-			      <th>Train Id</th>
+			     
 			  </tr>
 		  </thead>
 		  <tbody>
@@ -64,9 +64,6 @@
 					out.print(rs.getString("last_name"));
 					out.print("</td>");
 					
-					out.print("<td>");
-					out.print(rs.getString("TrainID"));
-					out.print("</td>");
 
 					out.print("</tr>");
 				}
