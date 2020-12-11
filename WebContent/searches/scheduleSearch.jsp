@@ -142,18 +142,21 @@
 		const curr_table = document.getElementById('schedule_table');
 		
 		const table_rows = curr_table.rows;
-		for (var i = 1; i < table_rows.length; i++) {
-               cols = table_rows[i].children;
-               var sched_entry = {};
-               for (var j = 0; j < cols.length; j++) {
-               	if(j === 0){
-               		sched_entry[col_names[j]] = cols[j].innerHTML;    		
-               	} else{
-               		sched_entry[col_names[j]] = cols[j].innerText;
-               	}
-               }
-               schedule_obj.push(sched_entry);
-       	}
+		
+		window.onload = () => {
+			for (var i = 1; i < table_rows.length; i++) {
+	               cols = table_rows[i].children;
+	               var sched_entry = {};
+	               for (var j = 0; j < cols.length; j++) {
+	               	if(j === 0){
+	               		sched_entry[col_names[j]] = cols[j].innerHTML;    		
+	               	} else{
+	               		sched_entry[col_names[j]] = cols[j].innerText;
+	               	}
+	               }
+	               schedule_obj.push(sched_entry);
+	       	}
+		}
 		
 		function rePopTable(toDisplay){
 			console.log(toDisplay);
@@ -178,6 +181,7 @@
 			sessionStorage.setItem("arrival", schedule_obj[e]["arrival"]);
 			sessionStorage.setItem("arrival_station", schedule_obj[e]["arrival_station"]);
 			sessionStorage.setItem("transit_line", schedule_obj[e]["transit_line"]);
+			sessionStorage.setItem("sched", JSON.stringify(schedule_obj));
 			window.location.href = "../reservation.jsp";
 		}
 		
