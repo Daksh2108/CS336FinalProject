@@ -35,19 +35,35 @@
 	   			Connection con = DriverManager.getConnection("jdbc:mysql://cs336.cl2bmz1pwrvy.us-east-2.rds.amazonaws.com:3306/proj","admin", "password");
 	   		 	PreparedStatement rs = con.prepareStatement("insert into Reservation(total_fare,username,TrainId, DepartureDateTime, DepartingStationId, ArrivingStationId, ArrivalDateTime) values(?,?,?,?,?,?,?)");
 	   		 	
-	   		 	rs.setString(1, ""+fare/2);
+	   		 	if(!inTrainId.equals("ONE WAY")){
+	   		 		rs.setString(1, ""+fare/2);
+	   		 	}
+	   		 	else{
+	   		 		rs.setString(1, ""+fare);
+	   		 	}
 	   		 	rs.setString(2, user);
 	   		 	rs.setString(3, outTrainId);
 	   		 	rs.setString(4, outDeptTime);
 	   		 	rs.setString(5, outDepSid);
-	   		 	rs.setString(6, outArrTime);
-	   		 	rs.setString(7, outArrSid);
+	   		 	rs.setString(6, outArrSid);
+	   		 	rs.setString(7, outArrTime);
 	   		 	
 	   		 	rs.executeUpdate();
 	   		 	
-	   		 	/* if(!inTrainId.equals("ONE WAY")){
-	            	rs = st.executeQuery("insert into Reservation(total_fare,username,TrainId, DepartureDateTime, DepartingStationId, ArrivingStationId, ArrivalDateTime) values("+ fare/2 +","+ user +","+ inTrainId +","+ inDeptTime +","+ inDepSid +","+ inArrSid +","+ inArrTime +");");
-	            } */
+	   		 	if(!inTrainId.equals("ONE WAY")){
+	   		 		PreparedStatement rs2 = con.prepareStatement("insert into Reservation(total_fare,username,TrainId, DepartureDateTime, DepartingStationId, ArrivingStationId, ArrivalDateTime) values(?,?,?,?,?,?,?)");
+		   		 	rs2.setString(1,""+fare/2);
+	   		 		rs2.setString(2, user);
+		   		 	rs2.setString(3, inTrainId);
+		   		 	rs2.setString(4, inDeptTime);
+		   		 	rs2.setString(5, inDepSid);
+		   		 	rs2.setString(6, inArrSid);
+		   		 	rs2.setString(7, inArrTime);
+		   		 	rs2.executeUpdate();
+	   		 	}
+	   		 	
+	   		 	
+	   		 	
 	   		} catch(Exception e){
 	   			e.printStackTrace();
 	   		}
