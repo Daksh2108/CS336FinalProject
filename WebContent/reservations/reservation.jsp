@@ -4,7 +4,7 @@
 <%@ page import ="java.sql.*" %>
 <% if ((session.getAttribute("user") == null)) { %>
     You are not logged in <br/>
-    <a href="login.jsp">Please Login</a>
+    <a href="../login.jsp">Please Login</a>
 <% } else{ %>
     Welcome <%=session.getAttribute("user")%> <br/> <!-- this will display the username that is stored in the session. -->
     <br/> <a href="searches/scheduleSearch.jsp">Find Schedules</a> <br/>
@@ -16,7 +16,6 @@
       	<title>Calculate Fares</title>
     </head>
    	<body>
-   	<form>
 	   	<h1>Calculate Fares</h1>
 	   	<p id="enter_train_id"></p>
 	   	<p id="enter_travel_time"></p>
@@ -53,12 +52,14 @@
 				  <tr>
 				  	  <th>Reserve</th>
 				      <th>Train ID</th>
-				      <th id="fareColumn" style="cursor:pointer">Fare ($)</th> 
+				      <th>Fare ($)</th> 
 				      <th>Total Travel Time</th>
-				      <th id="departColumn" style="cursor:pointer">Departure Date</th>
+				      <th>Departure Date</th>
 				      <th>Departure Station</th>
-				      <th id="arriveColumn" style="cursor:pointer">Arrival Date</th>
+				      <th>Dep. Station #</th>
+				      <th>Arrival Date</th>
 				      <th>Arrival Station</th>
+				      <th>Arr. Station #</th>
 				      <th>Transit Line</th>
 				  </tr>
 			  </thead>
@@ -66,7 +67,23 @@
 			  </tbody>
 		  </table>
 		  <br/>
-		  <input type="submit" value="Reserve My Trip!"/>
+		<form action="newRes.jsp" method="POST">
+		
+			<input id="oti" name="outbound_train_id" value="" hidden>
+			<input id="odt" name="outbound_departure_time" value="" hidden>
+			<input id="oat" name="outbound_arrival_time" value="" hidden>
+			<input id="ods" name="outbound_departure_station" value="" hidden>
+			<input id="oas" name="outbound_arrival_station" value="" hidden>
+			
+			<input id="iti" name="inbound_train_id" value="" hidden>
+			<input id="idt" name="inbound_departure_time" value="" hidden>
+			<input id="iat" name="inbound_arrival_time" value="" hidden>
+			<input id="ids" name="inbound_departure_station" value="" hidden>
+			<input id="ias" name="inbound_arrival_station" value="" hidden>
+			
+			<input id="total_trip_fare" name="trip_fare" value="" hidden>
+			
+		  	<input type="submit" value="Reserve My Trip!"/>
 	   	</form>
 	</body>
 	<script type="text/javascript">
@@ -79,9 +96,25 @@
 		const arrival = sessionStorage.getItem("arrival");
 		const arrival_station = sessionStorage.getItem("arrival_station");
 		const transit_line = sessionStorage.getItem("transit_line");
+		const out_departing_sid = sessionStorage.getItem("out_departing_sid");
+		const out_arriving_sid = sessionStorage.getItem("out_arriving_sid");
 		const schedule = JSON.parse(sessionStorage.getItem("sched"));
 		const curr_table = document.getElementById('round_trips');
 		const fare = parseFloat(sessionStorage.getItem("fare"));
+		
+		//set the input values for the form
+		document.getElementById("oti").value = train_id;
+		document.getElementById("odt").value = departure;
+		document.getElementById("oat").value = arrival;
+		document.getElementById("ods").value = out_departing_sid;
+		document.getElementById("oas").value = out_arriving_sid;
+		
+		document.getElementById("iti").value = "ONE WAY";
+		document.getElementById("idt").value = "ONE WAY";
+		document.getElementById("iat").value = "ONE WAY";
+		document.getElementById("ids").value = "ONE WAY";
+		document.getElementById("ias").value = "ONE WAY";
+		document.getElementById("total_trip_fare").value = fare;
 		
 		//age radio button element
 		const child_button = document.getElementById('child');
@@ -98,7 +131,7 @@
 		//round trip radio buttons
 		var round_trip_button = document.getElementsByName("trip");
 		
-		const col_names = ["reserve", "train_id", "fare", "travel_time", "departure", "departure_station", "arrival", "arrival_station", "transit_line"];
+		const col_names = ["reserve", "train_id", "fare", "travel_time", "departure", "departure_station", "departure_sid", "arrival", "arrival_station", "arrival_sid", "transit_line"];
 		var round_trips = schedule.filter(route => route.arrival_station === departure_station && route.departure_station === arrival_station && route.departure.localeCompare(arrival) >= 0);
 		
 		window.onload = () => {
@@ -144,30 +177,40 @@
 				discounted_fare = disabled ? total_fare * 0.5 : total_fare * 1;
 			}
 			document.getElementById("enter_fare").innerText = "Total Fare: $" + discounted_fare.toFixed(2);
+			document.getElementById("total_trip_fare").value = discounted_fare;
+			document.getElementById("iti").value = round_trips[position]["train_id"];
+			document.getElementById("idt").value = round_trips[position]["departure"];
+			document.getElementById("iat").value = round_trips[position]["arrival"];
+			document.getElementById("ids").value = round_trips[position]["departure_sid"];
+			document.getElementById("ias").value = round_trips[position]["arrival_sid"];
 		}
         
         //on click listeners
         child_button.addEventListener('click', (e) => {
         	age = "child";
         	discounted_fare =  disabled ? total_fare * 0.75 * 0.5 : total_fare * 0.75;
+        	document.getElementById("total_trip_fare").value = discounted_fare;
         	document.getElementById("enter_fare").innerText = "Total Fare: $" + discounted_fare.toFixed(2);
         });
         
         senior_button.addEventListener('click', (e) => {
         	age = "senior";
         	discounted_fare = disabled ? total_fare * 0.65 * 0.5 : total_fare * 0.65;
+        	document.getElementById("total_trip_fare").value = discounted_fare;
         	document.getElementById("enter_fare").innerText = "Total Fare: $" + discounted_fare.toFixed(2);
         });
         
         adult_button.addEventListener('click', (e) => {
         	age = "adult";
         	discounted_fare = disabled ? total_fare * 0.5 : total_fare * 1;
+        	document.getElementById("total_trip_fare").value = discounted_fare;
         	document.getElementById("enter_fare").innerText = "Total Fare: $" + discounted_fare.toFixed(2);
         });
         
         disabled_button.addEventListener('click', (e) => {
         	disabled = !disabled;
    			discounted_fare = disabled ? discounted_fare * 0.5 : discounted_fare * 2;
+   			document.getElementById("total_trip_fare").value = discounted_fare;
    			document.getElementById("enter_fare").innerText = "Total Fare: $" + discounted_fare.toFixed(2);
         });
 	</script>
