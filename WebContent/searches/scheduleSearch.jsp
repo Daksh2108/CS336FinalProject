@@ -176,6 +176,9 @@
 	            Object.keys(e).forEach((k, j) => {
 	              var cell = tr.insertCell(j);
 	              cell.innerHTML = e[k];
+	              if(j === 6 || j === 9){
+	            	  cell.hidden = true;
+	              }
 	            });
 	          });
 	        curr_table.replaceChild(new_rows, curr_table.childNodes[3]);
