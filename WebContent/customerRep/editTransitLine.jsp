@@ -37,7 +37,7 @@
     	    con.close();
     	    
      }catch (Exception e){
-    	 session.setAttribute("confirmation", "failed");
+    	 session.setAttribute("confirmation", "fails");
     	 response.sendRedirect("editSuccess.jsp");
      }
   

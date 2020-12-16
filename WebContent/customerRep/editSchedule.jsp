@@ -20,8 +20,8 @@
 	<h3>Edit Departure Date Time</h3><br/>
 	<form action="editDepartureTime.jsp" method="POST">
     Train ID: <input type="text" name="train_id"/> <br/>
-    Old Departure Date:<input type="text" name="oldDeparture_date"/> <br/>
-    Departure Date:<input type="text" name="departure_date"/> <br/>
+    Old Departure Date:<input type="text"  placeholder="2020-11-27 00:00:00" name="oldDeparture_date"/> <br/>
+    Departure Date:<input type="text" placeholder="2020-11-27 00:00:00" name="departure_date"/> <br/>
     Station Id:<input type="text" name="station_id"/> <br/>
 	Stop No:<input type="text" name="stop_no"/> <br/>
 	<input type="submit" value="submit"/> <br/> 
@@ -29,11 +29,11 @@
 	
 	<h3>Edit Arrival Date Time</h3><br/>
 	<form action="editArrivalTime.jsp" method="POST">
-	Train ID: <input type="text" name="train_id"/> <br/>
-	Old Arrival Date:<input type="text" name="oldArrival_date"/> <br/>
-    Arrival Date:<input type="text" name="arrival_date"/> <br/>
-    Station Id:<input type="text" name="station_id"/> <br/>
-	Stop No:<input type="text" name="stop_no"/> <br/>
+	Train ID: <input type="text" name="train_id2"/> <br/>
+	Old Arrival Date:<input type="text"  placeholder="2020-11-27 00:00:00" name="oldArrival_date"/> <br/>
+    Arrival Date:<input type="text"  placeholder="2020-11-27 00:00:00" name="arrival_date"/> <br/>
+    Station Id:<input type="text" name="station_id2"/> <br/>
+	Stop No:<input type="text" name="stop_no2"/> <br/>
 	<input type="submit" value="submit"/> <br/> 
 	</form> <br/>
 	
@@ -42,11 +42,7 @@
 	Train Id:<input type="text" name="train_id"/> <br/>
 	Transit Line:<input type="text" name="transit_line"/> <br/>
 	<input type="submit" value="submit"/> <br/> 
-	</form> <br/>
-	
-	
-	<a href="customerRepHome.jsp">Go Back</a>
-	   		
+	</form> <br/>	   		
 	   	<!-- Retrieve train schedules from data base -->
 	   	<%
 	   		try{

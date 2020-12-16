@@ -3,58 +3,127 @@
     pageEncoding="ISO-8859-1"%>
 <%@ page import="java.io.*,java.util.*"%>
 <%@ page import ="java.sql.*" %>
+<%! boolean exists(Connection con, String s,String dateTime) throws SQLException {
+	ResultSet result;
+	
+	PreparedStatement stmt = con.prepareStatement(
+			"select * from Departs_From WHERE " + s + "=?");
+	stmt.setString(1, dateTime);
+	result= stmt.executeQuery();
+	//resultset returns boolean type
+	boolean indicate = !result.next();
+	
+	result.close();
+	stmt.close();
+	
+	return indicate;
+}
+boolean trainExists(Connection con, String s,String dateTime) throws SQLException {
+	ResultSet result;
+	
+	PreparedStatement stmt = con.prepareStatement(
+			"select * from Departs_From WHERE " + s + "=?");
+	stmt.setString(1, dateTime);
+	result= stmt.executeQuery();
+	//resultset returns boolean type
+	boolean indicate = !result.next();
+	
+	result.close();
+	stmt.close();
+	
+	return indicate;
+}
 
+boolean departureDateExists(Connection con, String s,String dateTime) throws SQLException {
+	ResultSet result;
+	
+	PreparedStatement stmt = con.prepareStatement(
+			"select * from Departs_From WHERE " + s + "=?");
+	stmt.setString(1, dateTime);
+	result= stmt.executeQuery();
+	//resultset returns boolean type
+	boolean indicate = !result.next();
+	
+	result.close();
+	stmt.close();
+	
+	return indicate;
+}
+boolean stationIdExists(Connection con, String s,String dateTime) throws SQLException {
+	ResultSet result;
+	
+	PreparedStatement stmt = con.prepareStatement(
+			"select * from Departs_From WHERE " + s + "=?");
+	stmt.setString(1, dateTime);
+	result= stmt.executeQuery();
+	//resultset returns boolean type
+	boolean indicate = !result.next();
+	
+	result.close();
+	stmt.close();
+	
+	return indicate;
+}
+boolean stopNoExists(Connection con, String s,String dateTime) throws SQLException {
+	ResultSet result;
+	
+	PreparedStatement stmt = con.prepareStatement(
+			"select * from Departs_From WHERE " + s + "=?");
+	stmt.setString(1, dateTime);
+	result= stmt.executeQuery();
+	//resultset returns boolean type
+	boolean indicate = !result.next();
+	
+	result.close();
+	stmt.close();
+	
+	return indicate;
+}
+
+%>
 <% 
+
 String TrainId=request.getParameter("train_id");
 String departureDate=request.getParameter("departure_date");
 String oldDepartureDate=request.getParameter("oldDeparture_date");
 String stationId=request.getParameter("station_id");
 String stopNo=request.getParameter("stop_no");
 
+if(TrainId.equals("") || departureDate.equals("") || oldDepartureDate.equals("")  || stationId.equals("") || stopNo.equals("")){	
+	
+	out.println("Make sure all fields are not blank  <a href='editSchedule.jsp'>try again</a>");
+     return;
+}
+
+if(departureDate.length()!=19){
+	out.println("Make sure date is valid <a href='editSchedule.jsp'>try again</a>");
+    return;
+}
+
 
 Class.forName("com.mysql.jdbc.Driver");
 Connection con= DriverManager.getConnection("jdbc:mysql://cs336.cl2bmz1pwrvy.us-east-2.rds.amazonaws.com:3306/proj?useSSL=false","admin", "password");
 Statement st= con.createStatement();
 
-ResultSet rs2;
+boolean exists=exists(con, "DepartureDateTime", oldDepartureDate);
+boolean trainExists= trainExists(con, "Tid", TrainId);
+boolean departureDateExists= departureDateExists(con, "DepartureDateTime", oldDepartureDate);
+boolean stationIdExists= stationIdExists(con, "Sid", stationId);
+boolean stopNoExists= stopNoExists(con, "StopNumber", stopNo);
 
-String oldDepartureDateTime="";
+	if(exists==false && trainExists==false && departureDateExists==false && stationIdExists==false && stopNoExists==false){
+		int i =st.executeUpdate("Update Departs_From set DepartureDateTime = '"+ departureDate + "' where DepartureDateTime='"+oldDepartureDate+"' and Sid='" + stationId +"' and StopNumber='"+stopNo+"'");
+		session.setAttribute("confirmation", "pass");
+ 	    response.sendRedirect("editSuccess.jsp"); 
+	}else{
+		 session.setAttribute("confirmation", "fails");
+		 response.sendRedirect("editSuccess.jsp");
 
-String month="";
-String day="";
-String hours="";
-rs2 = st.executeQuery("select TIMESTAMPDIFF(month,'" + oldDepartureDate + "','" + departureDate + "') as Month");	 
-     while(rs2.next()){
-    	 month=rs2.getString("Month");
-     }
-	 
- rs2 = st.executeQuery("select TIMESTAMPDIFF(day,'" + oldDepartureDate + "','" + departureDate + "') as Day");	 
- 	while(rs2.next()){
-    	 day=rs2.getString("Day");
-     }
- 	
- rs2 = st.executeQuery("select TIMESTAMPDIFF(Hour,'" + oldDepartureDate + "','" + departureDate + "') as Hours");	 
- 	while(rs2.next()){
-     	 hours=rs2.getString("Hours");
-	 }
-  	 
-	out.println("MONTHHHHHHHHHH" + month);
-	out.println("DAYYYYYYYYYYYYYY" + day);
-	out.println("DAYYYYYYYYYYYYYY" + hours);
-	int intHours=Integer.parseInt(hours);
-	int noOfDays=Integer.parseInt(day);
-	int noOfMonth=Integer.parseInt(month);
-	if(intHours>24){
-		intHours=intHours-noOfDays*24;	
 	}
-	
-	//fix hours
+		
 	
 	 
-
-
-
-
+con.close();
 
 %>
 
