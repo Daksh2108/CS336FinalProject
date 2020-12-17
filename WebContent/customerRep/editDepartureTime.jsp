@@ -83,11 +83,11 @@ boolean stopNoExists(Connection con, String s,String dateTime) throws SQLExcepti
 %>
 <% 
 
-String TrainId=request.getParameter("train_id");
-String departureDate=request.getParameter("departure_date");
-String oldDepartureDate=request.getParameter("oldDeparture_date");
-String stationId=request.getParameter("station_id");
-String stopNo=request.getParameter("stop_no");
+String TrainId=request.getParameter("train_id").trim();
+String departureDate=request.getParameter("departure_date").trim();
+String oldDepartureDate=request.getParameter("oldDeparture_date").trim();
+String stationId=request.getParameter("station_id").trim();
+String stopNo=request.getParameter("stop_no").trim();
 
 if(TrainId.equals("") || departureDate.equals("") || oldDepartureDate.equals("")  || stationId.equals("") || stopNo.equals("")){	
 	
@@ -112,7 +112,11 @@ boolean stationIdExists= stationIdExists(con, "Sid", stationId);
 boolean stopNoExists= stopNoExists(con, "StopNumber", stopNo);
 
 	if(exists==false && trainExists==false && departureDateExists==false && stationIdExists==false && stopNoExists==false){
-		int i =st.executeUpdate("Update Departs_From set DepartureDateTime = '"+ departureDate + "' where DepartureDateTime='"+oldDepartureDate+"' and Sid='" + stationId +"' and StopNumber='"+stopNo+"'");
+		
+		//int i =st.executeUpdate("Update Reservation set TrainId='"+TrainId + "' and DepartureDateTime = '"+ departureDate + "'and DepartingStationId='" + stationId + "'where TrainId='"+TrainId+"' and DepartureDateTime='"+oldDepartureDate+"' and DepartingStationId='" + stationId +"'");
+		//int i =st.executeUpdate("Update Reservation set DepartureDateTime = '"+ departureDate + "'where TrainId='"+TrainId+"' and DepartureDateTime='"+oldDepartureDate+"' and DepartingStationId='" + stationId +"'");
+         int i =st.executeUpdate("Update Departs_From set DepartureDateTime = '"+ departureDate + "' where DepartureDateTime='"+oldDepartureDate+"' and Sid='" + stationId +"' and StopNumber='"+stopNo+"'");		
+		
 		session.setAttribute("confirmation", "pass");
  	    response.sendRedirect("editSuccess.jsp"); 
 	}else{

@@ -22,7 +22,7 @@
 	   		 	ResultSet rs;
 	
 	PreparedStatement stmt = con.prepareStatement(
-			"select c.first_name, c.last_name, r.date,t.TransitLine from Customer c, Reservation r, Train_Schedule_Data t where c.username=r.username and r.TrainId=t.TrainId and r.date=?");
+			"select c.first_name, c.last_name, r.DepartureDateTime,r.ArrivalDateTime,t.TransitLine from Customer c, Reservation r, Train_Schedule_Data t where c.username=r.username and r.TrainId=t.TrainId and r.DepartureDateTime=?");
 	stmt.setString(1, request.getParameter("date").trim());
 	rs= stmt.executeQuery();
 	   		 	
@@ -32,7 +32,8 @@
 			  <tr>
 			  	  <th>First  Name</th>
 			  	  <th>Last  Name</th>
-			  	  <th>Date</th>
+			  	  <th>DepartureDateTime</th>
+			  	  <th>ArrivalDateTime</th>
 			  	  <th>Transit Line</th>
 			  </tr>
 		  </thead>
@@ -53,7 +54,11 @@
 					out.print("</td>");
 					
 					out.print("<td>");
-					out.print(rs.getString("r.date"));
+					out.print(rs.getString("r.DepartureDateTime"));
+					out.print("</td>");
+					
+					out.print("<td>");
+					out.print(rs.getString("r.ArrivalDateTime"));
 					out.print("</td>");
 					
 					out.print("<td>");

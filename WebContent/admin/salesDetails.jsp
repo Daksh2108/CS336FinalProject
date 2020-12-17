@@ -19,7 +19,7 @@
 	   			Connection con = DriverManager.getConnection("jdbc:mysql://cs336.cl2bmz1pwrvy.us-east-2.rds.amazonaws.com:3306/proj","admin", "password");
 	   			Statement st = con.createStatement();
 	   		    ResultSet rs;
-	   		 	rs=st.executeQuery("select (extract(YEAR_MONTH FROM r.Date)) as Month , sum(r.total_fare) as Revenue from Reservation r where extract(YEAR_MONTH FROM r.Date) in (select extract(YEAR_MONTH FROM Date) from Reservation where extract(YEAR_MONTH FROM r.Date) = extract(YEAR_MONTH FROM Date)) group by(Month)");
+	   		 	rs=st.executeQuery("select (extract(YEAR_MONTH FROM r.DepartureDateTime)) as Month , sum(r.total_fare) as Revenue from Reservation r where extract(YEAR_MONTH FROM r.DepartureDateTime) in (select extract(YEAR_MONTH FROM DepartureDateTime) from Reservation where extract(YEAR_MONTH FROM r.DepartureDateTime) = extract(YEAR_MONTH FROM DepartureDateTime)) group by(Month)");
 	           
 	   		 	%>
 	   	

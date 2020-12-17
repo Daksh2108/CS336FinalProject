@@ -17,7 +17,7 @@
 	 	</form> <br/>
 	 	
 	 	<form action="dateList.jsp" method="POST">
-    	Produce List By Date: <input type="text" name="date"/> <br/>
+    	Produce List By DepartureDateTime: <input type="text" name="date"/> <br/>
 		<input type="submit" value="submit"/> <br/> 
 	 	</form> <br/>
              
@@ -32,14 +32,15 @@
 	   			Connection con = DriverManager.getConnection("jdbc:mysql://cs336.cl2bmz1pwrvy.us-east-2.rds.amazonaws.com:3306/proj","admin", "password");
 	   			Statement st = con.createStatement();
 	   		    ResultSet rs;
-	   		 	rs=st.executeQuery("select c.first_name, c.last_name, r.date,t.TransitLine from Customer c, Reservation r, Train_Schedule_Data t where c.username=r.username and r.TrainId=t.TrainId");
+	   		 	rs=st.executeQuery("select c.first_name, c.last_name,  r.DepartureDateTime,r.ArrivalDateTime,t.TransitLine from Customer c, Reservation r, Train_Schedule_Data t where c.username=r.username and r.TrainId=t.TrainId");
 	   		 	%>
 		<table id="customerList" style="width:100%" border='1'>
 		<thead>
 			  <tr>
 			  	  <th>First  Name</th>
 			  	  <th>Last  Name</th>
-			  	  <th>Date</th>
+			  	  <th>DepartureDateTime</th>
+			  	  <th>ArrivalDateTime</th>
 			  	  <th>Transit Line</th>
 			  </tr>
 		  </thead>
@@ -60,9 +61,13 @@
 					out.print("</td>");
 					
 					out.print("<td>");
-					out.print(rs.getString("r.date"));
+					out.print(rs.getString("r.DepartureDateTime"));
 					out.print("</td>");
 					
+					out.print("<td>");
+					out.print(rs.getString("r.ArrivalDateTime"));
+					out.print("</td>");
+				
 					out.print("<td>");
 					out.print(rs.getString("t.TransitLine"));
 					out.print("</td>");

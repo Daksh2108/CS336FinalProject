@@ -9,7 +9,7 @@
     </head>
    	<body>
 	   	<h1>Find Train Schedules</h1>
-	   	<a href='../success.jsp'>Home</a> <br/> <br/>
+	   	<a href='customerRepHome.jsp'>Home</a> <br/> <br/>
 	   	
 	   	<h3>Search</h3> (Leave empty if you don't want to filter a category)<br/>
 	   	Departure Station: <input type="text" placeholder="MetroPark" id="or_search"/> <br/>
@@ -21,7 +21,6 @@
 	Train Id:<input type="text" name="train_Id"/> <br/>
 	<input type="submit" value="Enter Train Id to Delete"/> <br/> 
 	 </form> <br/>
-	<a href="customerRepHome.jsp">Go Back</a>
 	   		
 	   	<!-- Retrieve train schedules from data base -->
 	   	<%

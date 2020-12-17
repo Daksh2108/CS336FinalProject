@@ -80,7 +80,7 @@ boolean checkDuplicateSSN(Connection con, String ssn, String userid) throws SQLE
     Connection con = DriverManager.getConnection("jdbc:mysql://cs336.cl2bmz1pwrvy.us-east-2.rds.amazonaws.com:3306/proj?useSSL=false","admin", "password");
     Statement st = con.createStatement();
     
-    ResultSet rs3=st.executeQuery("select * from users where username='" + userid + "' and password='" + pwd + "'"); 
+    ResultSet rs3=st.executeQuery("select * from Employee_Data where username='" + userid + "' and password='" + pwd + "'"); 
     			
     if (checkDuplicateUsers(con, "username", userid)==false) {
 		error = "Username " + userid + " is already taken.";

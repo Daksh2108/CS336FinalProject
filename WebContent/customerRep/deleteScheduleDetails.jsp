@@ -36,7 +36,6 @@ boolean ssnExists(Connection con, String s,String ssn) throws SQLException {
 			     int b=st.executeUpdate("DELETE FROM  Arrives_At where Tid='" + train_Id + "'"); 
 			     int c=st.executeUpdate("Delete FROM Departs_From where Tid='" + train_Id + "'");
 			     int d=st.executeUpdate("Delete FROM Train_Schedule_Data where TrainId='" + train_Id + "'");
-			     int e=st.executeUpdate("Delete FROM Employee_Data where TrainId='" + train_Id + "'");
 			     int f=st.executeUpdate("Delete FROM Train_Data where TrainId='" + train_Id + "'");
 			     
 			 	//   rs2 = st.executeQuery("select * from users where username='" + userid + "' and password='" + pwd + "'");

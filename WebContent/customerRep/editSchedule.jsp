@@ -51,7 +51,7 @@
 	   			Connection con = DriverManager.getConnection("jdbc:mysql://cs336.cl2bmz1pwrvy.us-east-2.rds.amazonaws.com:3306/proj","admin", "password");
 	   			Statement st = con.createStatement();
 	   		    ResultSet rs;
-	   		 	rs = st.executeQuery("SELECT sd.TrainId, sd.Fare, sd.Travel_time, sd.NumOfStops, sd.TransitLine, df.DepartureDateTime, aa.ArrivalDateTime, df.StopNumber as deptStop, aa.StopNumber as arrStop, "+ 
+	   		 	rs = st.executeQuery("SELECT sd.TrainId, sd.Fare, sd.Travel_time, sd.NumOfStops, sd.TransitLine, df.DepartureDateTime, aa.ArrivalDateTime, df.StopNumber as deptStop, aa.StopNumber as arrStop, aa.Sid as arrSid, df.Sid as dfSid, "+ 
 	   		 		"(SELECT Name "+
 	   		 		     "FROM Train_Station_Data as tsd "+
 	   		 		     "WHERE tsd.StationId = aa.Sid) as arrival_station, "+
@@ -73,9 +73,16 @@
 			      <th>Total Travel Time</th>
 			      <th id="departColumn" style="cursor:pointer">Departure Date</th>
 			      <th>Departure Station</th>
+			      <th>Departure Station Id</th>
+			      <th>Departure Stop No</th>
 			      <th id="arriveColumn" style="cursor:pointer">Arrival Date</th>
 			      <th>Arrival Station</th>
+			      <th>Arrival Station Id</th>
+			      <th>Arrival Stop No</th>
 			      <th>Transit Line</th>
+			      
+			      
+			      
 			  </tr>
 		  </thead>
 		  <tbody>
@@ -122,6 +129,14 @@
 					out.print("</td>");
 					
 					out.print("<td>");
+					out.print(rs.getString("dfSid"));
+					out.print("</td>");
+					
+					out.print("<td>");
+					out.print(rs.getString("deptStop"));
+					out.print("</td>");
+					
+					out.print("<td>");
 					out.print(rs.getString("ArrivalDateTime"));
 					out.print("</td>");
 					
@@ -130,8 +145,19 @@
 					out.print("</td>");
 					
 					out.print("<td>");
+					out.print(rs.getString("arrSid"));
+					out.print("</td>");
+					
+					out.print("<td>");
+					out.print(rs.getString("arrStop"));
+					out.print("</td>");
+					
+					out.print("<td>");
 					out.print(rs.getString("TransitLine"));
 					out.print("</td>");
+					
+					
+					
 
 					out.print("</tr>");
 					count++;
@@ -156,7 +182,7 @@
 		const datsearch = document.getElementById('datetime_search');
 		const search_button = document.getElementById('search');
 		
-		const col_names = ["train_id", "fare", "travel_time", "departure", "departure_station", "arrival", "arrival_station", "transit_line"];
+		const col_names = ["train_id", "fare", "travel_time", "departure", "departure_station","departureStationId","departureStopNo", "arrival", "arrival_station", "arrivalStationId","arrivalStopNo","transit_line"];
 		let schedule_obj = [];
 		let filtered_obj = [];
 		const curr_table = document.getElementById('schedule_table');
