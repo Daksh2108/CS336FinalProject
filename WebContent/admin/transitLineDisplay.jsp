@@ -18,7 +18,7 @@
 	   			Connection con = DriverManager.getConnection("jdbc:mysql://cs336.cl2bmz1pwrvy.us-east-2.rds.amazonaws.com:3306/proj","admin", "password");
 	   			Statement st = con.createStatement();
 	   		    ResultSet rs;
-	   		 	rs = st.executeQuery("select t.TransitLine,r.reservation_number,r.Date,r.total_fare,r.username ,r.TrainId from Reservation r , Train_Schedule_Data as t where t.TrainId=r.TrainId");
+	   		 	rs = st.executeQuery("select t.TransitLine,r.reservation_number,r.DepartureDateTime,r.total_fare,r.username ,r.TrainId from Reservation r , Train_Schedule_Data as t where t.TrainId=r.TrainId");
 	   	%>
 	   	
 		<table id="transitLineTable" style="width:100%" border='1'>
@@ -48,7 +48,7 @@
 					out.print("</td>");
 					
 					out.print("<td>");
-					out.print(rs.getString("r.Date"));
+					out.print(rs.getString("r.DepartureDateTime"));
 					out.print("</td>");
 					
 					out.print("<td>");
